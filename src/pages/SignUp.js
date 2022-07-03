@@ -8,7 +8,10 @@ import axios from '../api/axios'
 
 function SignUp() {
   const REGESTER_URL='/register'
-  const [erro,setErro]=useState()
+  const [erro,setErro]=useState({
+    errorExecte:false,
+    message:''
+  })
   const {handleChange,values,handleSubmit,handleBlur,touched,errors}=useFormik({
     initialValues:{
       firstName:'',
@@ -34,11 +37,14 @@ function SignUp() {
                                         })
       }
         
-       catch (error) {
-        if(!error?.respance){
-          setErro('No Server Respance')
-        }else if(error.respance?.status === 409){
-          setErro('email taken')
+       catch (err) {
+        //  if(!err?.respance){
+        //    setErro('No Server Respance')
+        //   console.log(erro)
+
+        //  }else 
+        if(err.response.status === 409){
+          setErro({errorExecte:true,message:'email already executed'})
         }
       }
     }
@@ -51,6 +57,7 @@ function SignUp() {
      className='w-10/12 mx-auto my-10'>
      <h1 className='relative left-[50%] text-2xl'>SignUp</h1>
        <div className='m-6 flex flex-col'>
+         {erro.errorExecte?(<div className='text-red-600 text-xl m-4'>{erro.message}</div>):null}
        <label htmlFor='firstName'>firstName</label>
               <input 
               required
