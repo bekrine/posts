@@ -14,7 +14,9 @@ function Navbar() {
                 </Link>
             </div>
             <div className='m-4'>
+                <Link to='/signin'>
                 Sig in
+                </Link>
             </div>
             <div className='m-4'>
                 posts
