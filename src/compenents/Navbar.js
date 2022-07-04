@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import { logout } from '../utils/logout'
 
 function Navbar() {
   return (
@@ -20,6 +21,11 @@ function Navbar() {
             </div>
             <div className='m-4'>
                 posts
+            </div>
+            <div 
+            className='m-4 cursor-pointer'
+            onClick={()=>logout()}>
+                logout
             </div>
         </div>
     </div>
