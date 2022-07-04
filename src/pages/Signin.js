@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import axios from '../api/axios'
+import {addToLocalStorege} from '../utils/localStorege'
 
 
 function Signin() {
@@ -26,9 +27,8 @@ function Signin() {
                                     withCredentials:true
                                 }
                                 )
-                console.log(values)                
+                addToLocalStorege(res.data.accesToken)            
             } catch (err) {
-
                 if(err.response.status === 401){
                     setErro({errorExecte:true,message:'not regester'})
                  }
