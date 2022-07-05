@@ -20,7 +20,9 @@ function Navbar() {
                 </Link>
             </div>
             <div className='m-4'>
+                <Link to='/postes'>
                 posts
+                </Link>
             </div>
             <div 
             className='m-4 cursor-pointer'
