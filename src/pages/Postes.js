@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import {get} from '../api/gitPostes'
 import axios from '../api/axios'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import {gitLocalStoreg} from '../utils/localStorege'
+import Poste from '../compenents/Poste'
 
 
 function Postes() {
@@ -10,13 +12,12 @@ function Postes() {
     console.log(postes)
     const accesToken=gitLocalStoreg()
     useEffect(()=>{
-        get()
+        const getPostes=async()=>{
+         await  get(setPostes)
+        }
+        getPostes()
     },[])
-    const get= async()=>{
-        const res=  await  axios.get('/postes')
-        setPostes(res.data)
-        // return res
-    }
+ 
     const {handleBlur,handleChange,handleSubmit,values,touched,errors}=useFormik({
     initialValues:{
         titel:'',
@@ -38,9 +39,10 @@ function Postes() {
                                         // withCredentials:true
     
                                     }    )
+                                    // console.log()
                                     setPostes(res.data)
         } catch (err) {
-            if(err.status === 401){
+            if(err.status === 403){
                 console.log('you are not signin ')
             }
         }
@@ -90,16 +92,13 @@ function Postes() {
 
 {
    postes !== undefined ? postes.map((post,index)=>{
+    return   post.map(item=>{
         return(
-            <div className='w-10/12 mx-auto my-10'>
-        <h1 className='relative left-[50%] text-2xl'>post by </h1>
-        <div className='mt-2'>
-            <h2 className='m-2'>{post[index].title}</h2>
-            <p className='m-2'> {post[index].content}</p>    
-        </div>
-    </div>
-        )
-    }):<div>non postes foind</div>
+           <Poste item={item} index={index}/>
+
+)
+       })
+    }):<div>LOADING ...</div>
 } 
     </>
   )
