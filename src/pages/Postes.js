@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {get} from '../api/gitPostes'
-import axios from '../api/axios'
+import useAxiosePrivate from '../hooks/useAxiosPrivet'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import {gitLocalStoreg} from '../utils/localStorege'
@@ -9,13 +9,19 @@ import Poste from '../compenents/Poste'
 
 function Postes() {
     const [postes,setPostes]=useState()
-    console.log(postes)
+    const axiosPrivet=useAxiosePrivate()
     const accesToken=gitLocalStoreg()
     useEffect(()=>{
+        let isMounting=true
+        const controller=new AbortController()
         const getPostes=async()=>{
          await  get(setPostes)
         }
         getPostes()
+        return ()=>{
+            isMounting=false
+            controller.abort()
+        }
     },[])
  
     const {handleBlur,handleChange,handleSubmit,values,touched,errors}=useFormik({
@@ -30,16 +36,14 @@ function Postes() {
 
         try {
             
-            const res= await axios.post("/postes",
+            const res= await axiosPrivet.post("/postes",
                                     JSON.stringify(values),
                                     {
                                         headers:{'Content-Type':'application/json',
-                                        authorization:`Bearer ${accesToken}`
+                                        // authorization:`Bearer ${accesToken}`
                                     },
-                                        // withCredentials:true
     
                                     }    )
-                                    // console.log()
                                     setPostes(res.data)
         } catch (err) {
             if(err.status === 403){

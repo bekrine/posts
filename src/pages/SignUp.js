@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import axios from '../api/axios'
+import {useNavigate} from 'react-router-dom'
 
 
 
 
 function SignUp() {
   const REGESTER_URL='/register'
+  const navigate = useNavigate()
   const [erro,setErro]=useState({
     errorExecte:false,
     message:''
@@ -35,6 +37,7 @@ function SignUp() {
                                           headers:{'Content-Type':'application/json'},
                                           withCredentials:true
                                         })
+        navigate('/signin',{replace:true})                                
       }
         
        catch (err) {

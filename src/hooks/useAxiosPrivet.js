@@ -1,10 +1,11 @@
 import {axiosPrivet} from "../api/axios";
 import {useEffect} from 'react'
 import useRefresh from "./useRefresh";
-
+import useAuth from "./useAuth";
 
 const useAxiosePrivate=()=>{
     const refresh=useRefresh()
+    const {auth}=useAuth()
     useEffect(()=>{
         const requestIntercept=axiosPrivet.interceptors.request.use(
             config=>{
@@ -33,7 +34,7 @@ const useAxiosePrivate=()=>{
             axiosPrivet.interceptors.request.eject(requestIntercept)
             axiosPrivet.interceptors.response.eject(respanceIntercept)
         }
-    },[refresh])
+    },[auth,refresh])
 
     return axiosPrivet
 }

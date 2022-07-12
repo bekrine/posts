@@ -1,12 +1,16 @@
 import React,{useState} from 'react'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
+import{useNavigate} from 'react-router-dom'
 import axios from '../api/axios'
+import useAuth from '../hooks/useAuth'
 import {addToLocalStorege} from '../utils/localStorege'
 
 
 function Signin() {
     const SIGNIN_URL='/auth'
+    const navigate=useNavigate()
+    const {setAuth}=useAuth()
     const [erro,setErro]=useState({
         errorExecte:false,
         message:''
@@ -19,6 +23,7 @@ function Signin() {
             email:Yup.string().email('email not valide').required("email is required"),
             password:Yup.string().min(4,'password must be at least 4 carcter').required('required')
         }),onSubmit:async(values)=>{
+          const {email,password}=values
             try {
             const res= await axios.post(SIGNIN_URL,
                                 JSON.stringify(values),
@@ -27,7 +32,10 @@ function Signin() {
                                     withCredentials:true
                                 }
                                 )
-                addToLocalStorege(res.data.accesToken)            
+                                const accesToken=res.data.accesToken
+                                setAuth({email,values,accesToken})
+                                navigate('/postes',{replace:true})
+                // addToLocalStorege(res.data.accesToken)            
             } catch (err) {
                 if(err.response.status === 401){
                     setErro({errorExecte:true,message:'not regester'})
