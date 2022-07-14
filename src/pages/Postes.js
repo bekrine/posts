@@ -95,14 +95,15 @@ function Postes() {
     </form>
 
 {
-   postes !== undefined ? postes.map((post,index)=>{
+   postes !== undefined ? 
+   postes.map((post,index)=>{
     return   post.map(item=>{
         return(
            <Poste item={item} index={index}/>
 
 )
-       })
-    }):<div>LOADING ...</div>
+})
+}):<div>LOADING ...</div>
 } 
     </>
   )

@@ -8,9 +8,9 @@ const useAxiosePrivate=()=>{
     const {auth}=useAuth()
     useEffect(()=>{
         const requestIntercept=axiosPrivet.interceptors.request.use(
-            config=>{
-                if(!config?.headers['authorization']){
-                    config?.headers['authorization']=`Bearer ${auth?.accesstoken}`
+            config => {
+                if(!config.headers['authorization']){
+                    config.headers['authorization'] = `Bearer ${auth?.accesstoken}`
                 }
                 return config
             },(error)=>Promise.reject(error)

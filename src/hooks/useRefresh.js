@@ -3,8 +3,8 @@ import useAuth from "./useAuth"
 
 function useRefresh() {
 
+    const {setAuth}=useAuth()
     const refresh=async()=>{
-        const {setAuth}=useAuth()
 
         const respance=axios.get("/refresh",{
             withCredentials:true
