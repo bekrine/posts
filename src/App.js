@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Signin from './pages/Signin';
 import Postes from './pages/Postes';
 import Missing from './pages/Missing';
+import SingelPost from './pages/SingelPost';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path='/signup' element={<SignUp/>}/>
                 <Route path='/signin' element={<Signin/>}/>
                 <Route path='/postes' element={<Postes/>}/>
+                <Route path='/singelposte' element={<SingelPost/>}/>
                 <Route path='*' element={<Missing/>}/>
             </Route>
           </Routes>
