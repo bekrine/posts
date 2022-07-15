@@ -9,9 +9,26 @@ export const get= async(setPostes)=>{
     // return res
 }
 
-export const getOnePost=async(id)=>{
+export const deletPost =async()=>{
+    const result=await axios.post(`/postes`)
+    console.log(result.data)
+}
+
+export const getOnePost =async(id)=>{
     // const navigate=useNavigate()
     const result=await axios.get(`/postes/${id}`)
     console.log(result.data)
     // navigate("/singelposte",{replace:true})
+}
+
+export const updatePost=async(values)=>{
+    const result=await axios.post(`/postes`,
+    JSON.stringify(values),
+    {
+        headers:{'Content-Type':'application/json',
+        // authorization:`Bearer ${accesToken}`
+    },
+
+    }    )
+
 }
